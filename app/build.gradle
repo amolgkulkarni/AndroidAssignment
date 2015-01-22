@@ -1,0 +1,39 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "com.synerzip.android.appnet"
+        minSdkVersion 17
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    /*productFlavors {
+        l {
+            minSdkVersion 'android-L'
+            targetSdkVersion 'android-L'
+            compileSdkVersion 'android-L'
+        }
+        old {
+            minSdkVersion 17
+            targetSdkVersion 20
+            compileSdkVersion 20
+        }
+    }*/
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:recyclerview-v7:+'
+    compile 'com.android.support:appcompat-v7:21.0.+'
+}
