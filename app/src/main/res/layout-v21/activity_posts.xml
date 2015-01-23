@@ -22,7 +22,9 @@
             android:layout_marginEnd="@dimen/add_button_margin"
             android:tint="@android:color/white"
             android:src="@android:drawable/ic_input_add"
-            android:background="@drawable/oval" />
+            android:background="@drawable/oval_ripple"
+            android:elevation="@dimen/elevation_low"
+            android:stateListAnimator="@anim/button_elevation" />
     </FrameLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

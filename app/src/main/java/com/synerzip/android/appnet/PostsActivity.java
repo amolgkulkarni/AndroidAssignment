@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -13,6 +14,11 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.synerzip.android.appnet.adapter.PostsAdapter;
@@ -72,6 +78,35 @@ public class PostsActivity extends ActionBarActivity implements SwipeRefreshLayo
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+        final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
+        ImageButton btnAlpha = (ImageButton)findViewById(R.id.postCommand);
+        btnAlpha.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View arg0) {
+                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                if (currentapiVersion < Build.VERSION_CODES.LOLLIPOP) {
+                    arg0.startAnimation(animAlpha);
+                }
+            }}
+        );
+
+        // Connect to onScrollListener of RecyclerView to get scroll position
+        mPostsView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                // mSwipeLayout.canChildScrollUp() will always return false as we are using
+                // FrameLayout to add Floating button to RecyclerView and Framelayout matches parent height.
+                if (0 == mPostsView.getChildPosition(mPostsView.getChildAt(0))) {
+                    mSwipeLayout.setEnabled(true);
+                } else {
+                    mSwipeLayout.setEnabled(false);
+                }
+            }
+        });
         /* Download Data */
         initiateRefresh();
     }
